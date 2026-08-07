@@ -92,12 +92,14 @@
     gap:6px;
     font-weight:700;
   }
+
   .brand .dot{
     width:7px; height:7px; border-radius:50%;
     background: var(--green);
     box-shadow: 0 0 6px var(--green), 0 0 12px var(--green);
     animation: blink-dot 1.6s infinite;
   }
+
   @keyframes blink-dot{
     0%,100%{ opacity:1; }
     50%{ opacity:.25; }
@@ -121,6 +123,7 @@
     user-select:none;
     -webkit-user-select:none;
   }
+
   .key-btn:active{
     background: var(--green-dim);
     color: #000;
@@ -140,6 +143,7 @@
     position: relative;
     overflow:hidden;
   }
+
   .stat-cell .label{
     font-size:10px;
     color: var(--text-dim);
@@ -148,6 +152,7 @@
     margin-bottom:2px;
     white-space:nowrap;
   }
+
   .stat-cell .value{
     font-size:14px;
     font-weight:700;
@@ -155,6 +160,7 @@
     overflow:hidden;
     text-overflow:ellipsis;
   }
+
   .stat-cell.c-msg .value{ color: var(--blue); }
   .stat-cell.c-char .value{ color: var(--green); }
   .stat-cell.c-token .value{ color: var(--amber); }
@@ -177,6 +183,7 @@
     margin-bottom:14px;
     white-space:pre-wrap;
   }
+
   .boot-line .ok{ color: var(--green); }
 
   .msg{
@@ -187,6 +194,7 @@
     border-radius: 10px;
     animation: fade-in .25s ease-out;
   }
+
   @keyframes fade-in{
     from{ opacity:0; transform: translateY(4px); }
     to{ opacity:1; transform: translateY(0); }
@@ -203,6 +211,7 @@
     margin-bottom:6px;
     font-size:11.5px;
   }
+
   .msg.user .prefix{ color: var(--blue); font-weight:700; }
   .msg.ai .prefix{ color: var(--green); font-weight:700; }
   .msg.cmd .prefix{ color: var(--amber); font-weight:700; }
@@ -210,12 +219,13 @@
   .msg-meta{ color: var(--text-dim); font-size:10px; margin-left:auto; }
 
   .msg-body{
-    font-size:14.5px;
+    font-size:18px;
     line-height:1.65;
     color: #d7ffe4;
     white-space: pre-wrap;
     word-break: break-word;
   }
+
   .msg.user .msg-body{ color: #cdeaff; }
   .msg.ai .msg-body{ color: #d7ffe4; }
 
@@ -249,6 +259,7 @@
     gap:8px;
     margin-bottom:8px;
   }
+
   .tool-btn{
     flex:1;
     background: var(--panel);
@@ -262,6 +273,7 @@
     display:flex; align-items:center; justify-content:center; gap:5px;
     -webkit-user-select:none; user-select:none;
   }
+
   .tool-btn:active{ background: var(--panel-2); }
   .tool-btn.clear{ color: var(--red); border-color:#3a1414; }
   .tool-btn.export{ color: var(--amber); border-color:#3a2f0f; }
@@ -275,6 +287,7 @@
     border-radius:18px;
     padding:6px 6px 6px 14px;
   }
+
   .input-row .prompt-sign{
     color: var(--blue);
     font-size:14px;
@@ -282,6 +295,7 @@
     padding-bottom:10px;
     flex-shrink:0;
   }
+
   #inputBox{
     flex:1;
     background: transparent;
@@ -290,12 +304,13 @@
     resize:none;
     color: var(--green);
     font-family: inherit;
-    font-size:15px; /* 15px prevents iOS Safari auto-zoom */
+    font-size:18px; /* Enlarged for easier reading on iPhone */
     line-height:1.5;
     max-height: 110px;
     padding:8px 4px;
     caret-color: var(--green);
   }
+
   #inputBox::placeholder{ color: var(--text-dim); }
 
   #sendBtn{
@@ -309,40 +324,48 @@
     display:flex; align-items:center; justify-content:center;
     -webkit-user-select:none; user-select:none;
   }
+
   #sendBtn:active{ background: var(--green-dim); color:#000; }
+
   #sendBtn.sending{
     animation: pulse-send 0.9s infinite;
   }
+
   @keyframes pulse-send{
     0%,100%{ box-shadow: 0 0 0 rgba(0,255,102,0); }
     50%{ box-shadow: 0 0 10px rgba(0,255,102,0.6); }
   }
 </style>
 </head>
+
 <body>
 
   <!-- ============ STATUS BAR ============ -->
   <div class="statusbar">
     <div class="statusbar-top">
-      <div class="brand"><span class="dot"></span>MATRIX://TERMINAL<span class="sub">&nbsp;v1.0</span></div>
+      <div class="brand"><span class="dot"></span>GPT<span class="sub">&nbsp;v1.0</span></div>
       <div style="display:flex; align-items:center; gap:8px;">
         <div class="key-btn" id="btnKey">🔑 KEY</div>
         <div class="sub" id="clock">--:--:--</div>
       </div>
     </div>
+
     <div class="stats-grid">
       <div class="stat-cell c-msg">
         <div class="label">MSGS</div>
         <div class="value" id="statMsg">0</div>
       </div>
+
       <div class="stat-cell c-char">
         <div class="label">CHARS</div>
         <div class="value" id="statChar">0</div>
       </div>
+
       <div class="stat-cell c-token">
         <div class="label">TOKENS</div>
         <div class="value" id="statToken">0</div>
       </div>
+
       <div class="stat-cell c-cost">
         <div class="label">EST. COST</div>
         <div class="value" id="statCost">$0.0000</div>
@@ -361,6 +384,7 @@
       <div class="tool-btn clear" id="btnClear">🧹 CLEAR LOG</div>
       <div class="tool-btn export" id="btnExport">📥 EXPORT CSV</div>
     </div>
+
     <div class="input-row">
       <div class="prompt-sign">&gt;</div>
       <textarea id="inputBox" rows="1" placeholder="Type text or \search\ query..." enterkeyhint="send"></textarea>
@@ -379,12 +403,14 @@
     var vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
   }
+
   setVH();
   window.addEventListener('resize', setVH);
   window.addEventListener('orientationchange', setVH);
 
   if (window.visualViewport){
     var vv = window.visualViewport;
+
     function onVVChange(){
       var h = vv.height;
       document.body.style.height = h + 'px';
@@ -393,6 +419,7 @@
       document.documentElement.style.setProperty('--vh', vh + 'px');
       scrollToBottom();
     }
+
     vv.addEventListener('resize', onVVChange);
     vv.addEventListener('scroll', onVVChange);
   }
@@ -405,16 +432,16 @@
   var totalChars = 0;
   var PRICE_PER_1K_TOKEN = 0.002;
 
-  var terminalEl   = document.getElementById('terminal');
-  var inputBox     = document.getElementById('inputBox');
-  var sendBtn      = document.getElementById('sendBtn');
-  var statMsg      = document.getElementById('statMsg');
-  var statChar     = document.getElementById('statChar');
-  var statToken    = document.getElementById('statToken');
-  var statCost     = document.getElementById('statCost');
-  var bootLine     = document.getElementById('bootLine');
-  var clockEl      = document.getElementById('clock');
-  var btnKey       = document.getElementById('btnKey');
+  var terminalEl = document.getElementById('terminal');
+  var inputBox = document.getElementById('inputBox');
+  var sendBtn = document.getElementById('sendBtn');
+  var statMsg = document.getElementById('statMsg');
+  var statChar = document.getElementById('statChar');
+  var statToken = document.getElementById('statToken');
+  var statCost = document.getElementById('statCost');
+  var bootLine = document.getElementById('bootLine');
+  var clockEl = document.getElementById('clock');
+  var btnKey = document.getElementById('btnKey');
 
   function getApiKey() {
     return localStorage.getItem('DEEPSEEK_API_KEY') || '';
@@ -423,26 +450,30 @@
   function setApiKey() {
     var curKey = getApiKey();
     var newKey = prompt('请输入你的 DeepSeek API Key (将安全保存在手机本地):', curKey);
+
     if (newKey !== null) {
       localStorage.setItem('DEEPSEEK_API_KEY', newKey.trim());
       alert('API Key 已成功更新！');
     }
   }
+
   btnKey.addEventListener('click', setApiKey);
 
   /* Boot Sequence Prompt */
   bootLine.innerHTML =
     '[BOOT] initializing secure shell ...\n' +
-    '[BOOT] direct api mode :: https://api.deepseek.com <span class="ok">[OK]</span>\n' +
-    '[BOOT] deepseek api status :: ACTIVE <span class="ok">[OK]</span>\n' +
+    '[BOOT] direct api mode :: GPT <span class="ok">[OK]</span>\n' +
+    '[BOOT] GPT api status :: ACTIVE <span class="ok">[OK]</span>\n' +
     '[BOOT] awaiting input_ type message or \\search\\ <query>';
 
   function tick(){
     var d = new Date();
-    var p = function(n){ return (n<10?'0':'')+n; };
-    clockEl.textContent = p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+    var p = function(n){ return (n < 10 ? '0' : '') + n; };
+    clockEl.textContent = p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
   }
-  tick(); setInterval(tick, 1000);
+
+  tick();
+  setInterval(tick, 1000);
 
   /* =========================================================
      2. Utility Functions
@@ -454,8 +485,8 @@
   }
 
   function fmtTime(d){
-    var p = function(n){ return (n<10?'0':'')+n; };
-    return p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+    var p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
   }
 
   function scrollToBottom(){
@@ -466,14 +497,21 @@
 
   function escapeHtml(str){
     return str.replace(/[&<>"']/g, function(c){
-      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      return ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      })[c];
     });
   }
 
   function updateStats(){
-    statMsg.textContent   = chatHistory.length;
-    statChar.textContent  = totalChars;
+    statMsg.textContent = chatHistory.length;
+    statChar.textContent = totalChars;
     statToken.textContent = totalTokens;
+
     var cost = (totalTokens / 1000) * PRICE_PER_1K_TOKEN;
     statCost.textContent = '$' + cost.toFixed(4);
   }
@@ -491,9 +529,14 @@
 
     var prefix = document.createElement('span');
     prefix.className = 'prefix';
-    if(entry.role === 'user') prefix.textContent = '[you@localhost ~]$';
-    else if(entry.role === 'cmd') prefix.textContent = '[search@engine ~]$';
-    else prefix.textContent = '[deepseek@matrix ~]#';
+
+    if(entry.role === 'user') {
+      prefix.textContent = '[you@localhost ~]$';
+    } else if(entry.role === 'cmd') {
+      prefix.textContent = '[search@engine ~]$';
+    } else {
+      prefix.textContent = '[gpt@matrix ~]#';
+    }
 
     var time = document.createElement('span');
     time.className = 'msg-time';
@@ -515,20 +558,29 @@
     wrap.appendChild(body);
     terminalEl.appendChild(wrap);
     scrollToBottom();
-    return { wrap: wrap, body: body, meta: meta };
+
+    return {
+      wrap: wrap,
+      body: body,
+      meta: meta
+    };
   }
 
   function showTyping(){
     var row = document.createElement('div');
     row.className = 'typing-row';
     row.id = 'typingRow';
-    row.innerHTML = '&gt; DEEPSEEK processing response <span class="cursor-blink"></span>';
+    row.innerHTML = '&gt; GPT processing response <span class="cursor-blink"></span>';
     terminalEl.appendChild(row);
     scrollToBottom();
   }
+
   function hideTyping(){
     var row = document.getElementById('typingRow');
-    if (row) row.remove();
+
+    if (row) {
+      row.remove();
+    }
   }
 
   /* =========================================================
@@ -536,19 +588,23 @@
   ========================================================= */
   async function sendMessage(text){
     if (!text || !text.trim()) return;
+
     text = text.trim();
 
     var apiKey = getApiKey();
+
     if (!apiKey) {
       alert('首次使用请先设置 DeepSeek API Key！');
       setApiKey();
       apiKey = getApiKey();
+
       if (!apiKey) return;
     }
 
     // Check for \search\ command
     var isSearchCmd = text.toLowerCase().startsWith('\\search\\');
     var searchQuery = '';
+
     if(isSearchCmd){
       searchQuery = text.substring(8).replace(/^\\/, '').trim();
     }
@@ -556,6 +612,7 @@
     // ---- 1. User Message Display ----
     var now = new Date();
     var userTokens = estimateTokens(text);
+
     var userEntry = {
       role: isSearchCmd ? 'cmd' : 'user',
       content: text,
@@ -563,6 +620,7 @@
       tokens: userTokens,
       time: fmtTime(now)
     };
+
     chatHistory.push(userEntry);
     totalChars += userEntry.chars;
     totalTokens += userEntry.tokens;
@@ -574,8 +632,8 @@
     showTyping();
 
     try {
-      var finalQuery = isSearchCmd 
-        ? "Please act as a comprehensive dictionary, grammar, and syntax analysis assistant. Provide a detailed analysis, definitions, usage examples, and breakdown for: " + searchQuery 
+      var finalQuery = isSearchCmd
+        ? "Please act as a comprehensive dictionary, grammar, and syntax analysis assistant. Provide a detailed analysis, definitions, usage examples, and breakdown for: " + searchQuery
         : text;
 
       var response = await fetch("https://api.deepseek.com/chat/completions", {
@@ -587,8 +645,14 @@
         body: JSON.stringify({
           model: "deepseek-chat",
           messages: [
-            { role: "system", content: "You are an AI assistant helping with English grammar, vocabulary, and direct query execution." },
-            { role: "user", content: finalQuery }
+            {
+              role: "system",
+              content: "You are an AI assistant helping with English grammar, vocabulary, and direct query execution."
+            },
+            {
+              role: "user",
+              content: finalQuery
+            }
           ],
           stream: true
         })
@@ -603,6 +667,7 @@
 
       // Ready placeholder entry for streaming
       var aiNow = new Date();
+
       var aiEntry = {
         role: 'ai',
         content: '',
@@ -610,7 +675,7 @@
         tokens: 0,
         time: fmtTime(aiNow)
       };
-      
+
       var rendered = renderMessage(aiEntry);
       var reader = response.body.getReader();
       var decoder = new TextDecoder('utf-8');
@@ -618,6 +683,7 @@
 
       while (true) {
         var res = await reader.read();
+
         if (res.done) break;
 
         var chunk = decoder.decode(res.value, { stream: true });
@@ -625,6 +691,7 @@
 
         for (var i = 0; i < lines.length; i++) {
           var line = lines[i].trim();
+
           if (line.startsWith('data: ') && line !== 'data: [DONE]') {
             try {
               var json = JSON.parse(line.slice(6));
@@ -651,20 +718,24 @@
 
     } catch (err){
       hideTyping();
+
       var errEntry = {
         role: 'ai',
         content: '[CRITICAL ERROR] ' + (err.message || err),
-        chars: 0, 
-        tokens: 0, 
+        chars: 0,
+        tokens: 0,
         time: fmtTime(new Date())
       };
+
       chatHistory.push(errEntry);
       renderMessage(errEntry);
       updateStats();
+
     } finally {
       sendBtn.classList.remove('sending');
     }
   }
+
   window.sendMessage = sendMessage;
 
   /* =========================================================
@@ -674,11 +745,14 @@
     inputBox.style.height = 'auto';
     inputBox.style.height = Math.min(inputBox.scrollHeight, 110) + 'px';
   }
+
   inputBox.addEventListener('input', autoGrow);
 
   function doSend(){
     var text = inputBox.value;
+
     if (!text.trim()) return;
+
     inputBox.value = '';
     autoGrow();
     sendMessage(text);
@@ -702,15 +776,21 @@
   ========================================================= */
   document.getElementById('btnClear').addEventListener('click', function(){
     if (chatHistory.length === 0) return;
+
     if (!confirm('Clear all conversation logs? This action cannot be undone.')) return;
+
     chatHistory = [];
     window.chatHistory = chatHistory;
     totalTokens = 0;
     window.totalTokens = 0;
     totalChars = 0;
-    Array.prototype.slice.call(terminalEl.querySelectorAll('.msg, .typing-row')).forEach(function(el){
+
+    Array.prototype.slice.call(
+      terminalEl.querySelectorAll('.msg, .typing-row')
+    ).forEach(function(el){
       el.remove();
     });
+
     updateStats();
   });
 
@@ -722,11 +802,28 @@
       alert('No conversation logs available to export.');
       return;
     }
-    var rows = [['INDEX','ROLE','CONTENT','CHARS','TOKENS','TIME']];
+
+    var rows = [
+      ['INDEX','ROLE','CONTENT','CHARS','TOKENS','TIME']
+    ];
+
     chatHistory.forEach(function(entry, idx){
-      var roleLabel = entry.role === 'user' ? 'USER' : (entry.role === 'cmd' ? 'SEARCH' : 'DEEPSEEK');
-      var content = entry.content.replace(/"/g, '""').replace(/\n/g, ' ');
-      rows.push([idx + 1, roleLabel, content, entry.chars, entry.tokens, entry.time]);
+      var roleLabel = entry.role === 'user'
+        ? 'USER'
+        : (entry.role === 'cmd' ? 'SEARCH' : 'DEEPSEEK');
+
+      var content = entry.content
+        .replace(/"/g, '""')
+        .replace(/\n/g, ' ');
+
+      rows.push([
+        idx + 1,
+        roleLabel,
+        content,
+        entry.chars,
+        entry.tokens,
+        entry.time
+      ]);
     });
 
     var csvContent = rows.map(function(row){
@@ -736,12 +833,21 @@
     }).join('\r\n');
 
     var BOM = '\uFEFF';
-    var blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+    var blob = new Blob(
+      [BOM + csvContent],
+      { type: 'text/csv;charset=utf-8;' }
+    );
+
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    var stamp = new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
+    var stamp = new Date()
+      .toISOString()
+      .slice(0,19)
+      .replace(/[:T]/g,'-');
+
     a.href = url;
     a.download = 'deepseek_terminal_log_' + stamp + '.csv';
+
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -754,5 +860,6 @@
 
 })();
 </script>
+
 </body>
 </html>
